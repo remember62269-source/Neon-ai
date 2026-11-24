@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b18">
+<link rel="manifest" href="manifest.webmanifest">
+<title>NEON AI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#17204a,#080b18 55%);color:#f4f6ff;font:16px system-ui,sans-serif;min-height:100vh;display:flex;justify-content:center}
+.app{width:min(100%,760px);min-height:100vh;display:flex;flex-direction:column;padding:18px}
+header{display:flex;align-items:center;gap:12px;padding:12px 4px 20px}
+.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#00e5ff,#8b5cf6);display:grid;place-items:center;color:#07101e;font-weight:900;font-size:22px;box-shadow:0 0 24px #00d9ff55}
+h1{font-size:21px;margin:0;letter-spacing:2px}header small{color:#9ba8d3}
+#chat{flex:1;display:flex;flex-direction:column;gap:12px;padding:10px 0 18px}
+.msg{max-width:88%;padding:13px 15px;border-radius:17px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
+.bot{align-self:flex-start;background:#151d38;border:1px solid #29365e}
+.user{align-self:flex-end;background:linear-gradient(135deg,#164d70,#49318a);border:1px solid #5273ba}
+form{display:flex;gap:9px;padding:12px 0 calc(12px + env(safe-area-inset-bottom))}
+input{min-width:0;flex:1;background:#111831;border:1px solid #34436d;border-radius:15px;padding:15px;color:white;font:inherit;outline:none}
+button{border:0;border-radius:15px;padding:0 19px;background:linear-gradient(135deg,#00d9ff,#8b5cf6);color:#07101e;font-weight:800;font-size:15px}
+.hint{color:#8d9bc6;font-size:12px;text-align:center;padding-bottom:10px}
+</style>
+</head>
+<body><main class="app">
+<header><div class="logo">N</div><div><h1>NEON AI</h1><small>Твой цифровой помощник</small></div></header>
+<section id="chat"><div class="msg bot">Привет! Я NEON AI ✨ Пока работаю в демонстрационном режиме. Для настоящих ответов ИИ потребуется подключить сервер.</div></section>
+<form id="form"><input id="message" placeholder="Напиши сообщение..." autocomplete="off"><button type="submit">➤</button></form>
+<div class="hint">NEON AI · PWA</div>
+</main>
+<script>
+const chat=document.querySelector('#chat'),form=document.querySelector('#form'),input=document.querySelector('#message');
+function add(text,who){const d=document.createElement('div');d.className='msg '+who;d.textContent=text;chat.appendChild(d);d.scrollIntoView({behavior:'smooth',block:'end'});}
+form.addEventListener('submit',e=>{e.preventDefault();const s=input.value.trim();if(!s)return;add(s,'user');input.value='';setTimeout(()=>add('Я получил твоё сообщение! Сейчас это демо-версия интерфейса. Чтобы отвечать как настоящий ИИ, нужно подключить безопасный сервер с API.','bot'),350);});
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script></body></html>
